@@ -1,0 +1,103 @@
+==================
+optional select
+==================
+a.?b
+---
+(expr
+  (select_expression
+    (identifier)
+    (optional)
+    (identifier)))
+==================
+chained optional select
+==================
+a.b.?c.?d
+---
+(expr
+  (select_expression
+    (select_expression
+      (select_expression
+        (identifier)
+        (identifier))
+      (optional)
+      (identifier))
+    (optional)
+    (identifier)))
+==================
+optional index
+==================
+a[?'k'].orValue(1)
+---
+(expr
+  (member_call_expression
+    (index_expression
+      (identifier)
+      (optional)
+      (string_literal
+        (single_quoted_string_literal)))
+    (identifier)
+    (arguments
+      (int_literal
+        (decimal_literal)))))
+==================
+optional list element
+==================
+[?a, b, ?c]
+---
+(expr
+  (list_expression
+    (optional)
+    (identifier)
+    (identifier)
+    (optional)
+    (identifier)))
+==================
+optional map entry
+==================
+{?'k': v, 'j': w}
+---
+(expr
+  (map_expression
+    (map_entry
+      (optional)
+      (string_literal
+        (single_quoted_string_literal))
+      (identifier))
+    (map_entry
+      (string_literal
+        (single_quoted_string_literal))
+      (identifier))))
+==================
+optional field initializer
+==================
+Msg{?f: v}
+---
+(expr
+  (struct_expression
+    (identifier)
+    (struct_fields
+      (field_initializer
+        (optional)
+        (identifier)
+        (identifier)))))
+==================
+optional select in conditional
+==================
+c ? a.?b : [?d]
+---
+(expr
+  (conditional_expression
+    (identifier)
+    (select_expression
+      (identifier)
+      (optional)
+      (identifier))
+    (list_expression
+      (optional)
+      (identifier))))
+==================
+optional marker is not allowed in call arguments
+:error
+==================
+f(?a)
+---

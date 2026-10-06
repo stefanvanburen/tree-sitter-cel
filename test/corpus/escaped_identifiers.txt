@@ -1,0 +1,59 @@
+==================
+escaped identifier select
+==================
+a.`b-c`
+---
+(expr
+  (select_expression
+    (identifier)
+    (escaped_identifier)))
+==================
+escaped identifier with dots, slashes and spaces
+==================
+a.`b.c/d e`
+---
+(expr
+  (select_expression
+    (identifier)
+    (escaped_identifier)))
+==================
+optional escaped identifier select
+==================
+a.?`b-c`
+---
+(expr
+  (select_expression
+    (identifier)
+    (optional)
+    (escaped_identifier)))
+==================
+escaped identifier field initializer
+==================
+Msg{`f-x`: 1}
+---
+(expr
+  (struct_expression
+    (identifier)
+    (struct_fields
+      (field_initializer
+        (escaped_identifier)
+        (int_literal
+          (decimal_literal))))))
+==================
+escaped identifier is not an expression on its own
+:error
+==================
+`a-b`
+---
+==================
+escaped identifier is not a method name
+:error
+==================
+a.`b-c`()
+---
+==================
+empty escaped identifier
+:error
+==================
+a.``
+---

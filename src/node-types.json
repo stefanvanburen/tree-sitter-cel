@@ -830,6 +830,10 @@
         "required": true,
         "types": [
           {
+            "type": "escaped_identifier",
+            "named": true
+          },
+          {
             "type": "identifier",
             "named": true
           },
@@ -933,6 +937,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "optional",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1127,6 +1141,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "optional",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1210,6 +1234,10 @@
         },
         {
           "type": "null",
+          "named": true
+        },
+        {
+          "type": "optional",
           "named": true
         },
         {
@@ -1439,6 +1467,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "optional",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1581,6 +1619,11 @@
     }
   },
   {
+    "type": "optional",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "parenthesized_expression",
     "named": true,
     "fields": {},
@@ -1693,6 +1736,10 @@
         "required": true,
         "types": [
           {
+            "type": "escaped_identifier",
+            "named": true
+          },
+          {
             "type": "identifier",
             "named": true
           },
@@ -1796,6 +1843,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "optional",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -2196,6 +2253,10 @@
   {
     "type": "else",
     "named": false
+  },
+  {
+    "type": "escaped_identifier",
+    "named": true
   },
   {
     "type": "false",

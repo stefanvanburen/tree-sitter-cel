@@ -105,21 +105,37 @@ module.exports = grammar({
     // so proto fields named with reserved words (e.g. `as`, `return`) are valid.
     field_initializer: ($) =>
       seq(
-        field('key', choice($.identifier, $.reserved_keyword)),
+        optional($.optional),
+        field('key', choice($.identifier, $.reserved_keyword, $.escaped_identifier)),
         ':',
         field('value', $._expression)
       ),
 
     map_expression: ($) =>
       seq('{', optional(seq($.map_entry, repeat(seq(',', $.map_entry)), optional(','))), '}'),
-    map_entry: ($) => seq(field('key', $._expression), ':', field('value', $._expression)),
+    map_entry: ($) =>
+      seq(optional($.optional), field('key', $._expression), ':', field('value', $._expression)),
 
-    list_expression: ($) => seq('[', optional($._expressions), ']'),
+    list_expression: ($) =>
+      seq(
+        '[',
+        optional(
+          seq($._list_element, repeat(seq(',', $._list_element)), optional(','))
+        ),
+        ']'
+      ),
+    _list_element: ($) => seq(optional($.optional), $._expression),
 
     index_expression: ($) =>
       prec(
         PREC.primary,
-        seq(field('operand', $._expression), '[', field('index', $._expression), ']')
+        seq(
+          field('operand', $._expression),
+          '[',
+          optional($.optional),
+          field('index', $._expression),
+          ']'
+        )
       ),
 
     select_expression: ($) =>
@@ -128,7 +144,8 @@ module.exports = grammar({
         seq(
           field('operand', $._expression),
           '.',
-          field('member', choice($.identifier, $.reserved_keyword))
+          optional($.optional),
+          field('member', choice($.identifier, $.reserved_keyword, $.escaped_identifier))
         )
       ),
 
@@ -202,6 +219,16 @@ module.exports = grammar({
     },
 
     identifier: ($) => /[_\p{XID_Start}][_\p{XID_Continue}]*/,
+
+    // A field name in backticks, for names that are not identifiers because they
+    // contain dashes, dots, slashes or spaces. Valid only as a selected member or
+    // a struct field key.
+    escaped_identifier: ($) => /`[a-zA-Z0-9_.\/ -]+`/,
+
+    // The `?` of the optional syntax: `a.?b`, `a[?i]`, `[?e]`, `{?k: v}`
+    // and `Msg{?f: v}` evaluate to an optional value, or omit the entry when
+    // the value is absent.
+    optional: ($) => '?',
 
     // Keywords reserved for future use or for embedding compatibility.
     // They cannot appear as identifiers in standard CEL expressions, but are

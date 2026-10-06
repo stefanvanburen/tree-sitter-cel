@@ -18,7 +18,7 @@
   "||"
 ] @operator
 
-; Ternary operator
+; Ternary and optional operators
 "?" @operator
 
 (conditional_expression
@@ -68,6 +68,14 @@
   member: [
     (identifier)
     (reserved_keyword)
+    (escaped_identifier)
+  ] @variable.member)
+
+(field_initializer
+  key: [
+    (identifier)
+    (reserved_keyword)
+    (escaped_identifier)
   ] @variable.member)
 
 ; Variables
