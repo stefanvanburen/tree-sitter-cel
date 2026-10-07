@@ -20,7 +20,8 @@
     "description": "Common Expression Language (CEL) grammar for tree-sitter",
     "authors": [
       {
-        "name": "Buf Technologies, Inc."
+        "name": "Stefan VanBuren",
+        "email": "stefan@vanburen.xyz"
       }
     ],
     "links": {
