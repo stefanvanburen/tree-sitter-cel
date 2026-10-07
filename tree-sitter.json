@@ -24,7 +24,7 @@
       }
     ],
     "links": {
-      "repository": "https://github.com/bufbuild/tree-sitter-cel"
+      "repository": "https://github.com/stefanvanburen/tree-sitter-cel"
     }
   },
   "bindings": {
