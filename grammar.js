@@ -1,21 +1,6 @@
 // Copyright 2023 Buf Technologies, Inc.
 // Copyright 2026 Stefan VanBuren
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
 
-/* eslint-disable comma-dangle */
-/* eslint-disable camelcase */
-/* eslint-disable no-undef */
 const PREC = {
   primary: 9,
   select: 8,
@@ -219,23 +204,23 @@ module.exports = grammar({
       )
     },
 
-    identifier: ($) => /[_\p{XID_Start}][_\p{XID_Continue}]*/,
+    identifier: (_) => /[_\p{XID_Start}][_\p{XID_Continue}]*/,
 
     // A field name in backticks, for names that are not identifiers because they
     // contain dashes, dots, slashes or spaces. Valid only as a selected member or
     // a struct field key.
-    escaped_identifier: ($) => /`[a-zA-Z0-9_.\/ -]+`/,
+    escaped_identifier: (_) => /`[a-zA-Z0-9_.\/ -]+`/,
 
     // The `?` of the optional syntax: `a.?b`, `a[?i]`, `[?e]`, `{?k: v}`
     // and `Msg{?f: v}` evaluate to an optional value, or omit the entry when
     // the value is absent.
-    optional: ($) => '?',
+    optional: (_) => '?',
 
     // Keywords reserved for future use or for embedding compatibility.
     // They cannot appear as identifiers in standard CEL expressions, but are
     // permitted as method names in receiver-call style (e.g. `x.package()`)
     // and as struct field keys (e.g. `Foo{as: 1}`).
-    reserved_keyword: ($) =>
+    reserved_keyword: (_) =>
       choice(
         'as',
         'break',
@@ -259,39 +244,39 @@ module.exports = grammar({
 
     // Wrap in token() so whitespace cannot appear between components
     // (e.g. `0 x FF` must not parse as a hex literal).
-    hex_literal: ($) => token(seq('0', choice('x', 'X'), hexDigit, repeat(hexDigit))),
-    decimal_literal: ($) => token(choice('0', /[1-9][0-9]*/)),
+    hex_literal: (_) => token(seq('0', choice('x', 'X'), hexDigits)),
+    decimal_literal: (_) => token(choice('0', /[1-9][0-9]*/)),
     int_literal: ($) => choice($.hex_literal, $.decimal_literal),
     // uint_literal is a flat token() so no whitespace can appear between
     // the integer and the u/U suffix (e.g. `1 u` must not parse as uint).
-    uint_literal: ($) =>
+    uint_literal: (_) =>
       token(
         choice(
           seq('0', /[uU]/),
           seq(/[1-9][0-9]*/, /[uU]/),
-          seq('0', choice('x', 'X'), hexDigit, repeat(hexDigit), /[uU]/)
+          seq('0', choice('x', 'X'), hexDigits, /[uU]/)
         )
       ),
-    float_literal: ($) => token(floatLiteral),
+    float_literal: (_) => token(floatLiteral),
 
     // String literals: no prefix (regular) or r/R prefix (raw, no escape processing).
     // The prefix is embedded in the token so the lexer resolves the ambiguity with
     // identifiers via maximal munch.
-    double_quote_string_literal: ($) =>
+    double_quote_string_literal: (_) =>
       token(
         choice(
           seq('"', repeat(choice(/[^"\\\r\n]/, string_escape)), '"'),
           seq(/[rR]/, '"', repeat(/[^"\r\n]/), '"')
         )
       ),
-    single_quoted_string_literal: ($) =>
+    single_quoted_string_literal: (_) =>
       token(
         choice(
           seq("'", repeat(choice(/[^'\\\r\n]/, string_escape)), "'"),
           seq(/[rR]/, "'", repeat(/[^'\r\n]/), "'")
         )
       ),
-    triple_double_quote_string_literal: ($) =>
+    triple_double_quote_string_literal: (_) =>
       token(
         choice(
           seq(
@@ -309,7 +294,7 @@ module.exports = grammar({
           )
         )
       ),
-    triple_single_quoted_string_literal: ($) =>
+    triple_single_quoted_string_literal: (_) =>
       token(
         choice(
           seq(
@@ -341,21 +326,21 @@ module.exports = grammar({
 
     // Bytes literals: b/B prefix (non-raw) or b/B + r/R in either order (raw).
     // Raw bytes treat backslash as a literal character.
-    bytes_double_quote_literal: ($) =>
+    bytes_double_quote_literal: (_) =>
       token(
         choice(
           seq(/[bB]/, '"', repeat(choice(/[^"\\\r\n]/, string_escape)), '"'),
           seq(/[bB][rR]|[rR][bB]/, '"', repeat(/[^"\r\n]/), '"')
         )
       ),
-    bytes_single_quoted_literal: ($) =>
+    bytes_single_quoted_literal: (_) =>
       token(
         choice(
           seq(/[bB]/, "'", repeat(choice(/[^'\\\r\n]/, string_escape)), "'"),
           seq(/[bB][rR]|[rR][bB]/, "'", repeat(/[^'\r\n]/), "'")
         )
       ),
-    bytes_triple_double_quote_literal: ($) =>
+    bytes_triple_double_quote_literal: (_) =>
       token(
         choice(
           seq(
@@ -374,7 +359,7 @@ module.exports = grammar({
           )
         )
       ),
-    bytes_triple_single_quoted_literal: ($) =>
+    bytes_triple_single_quoted_literal: (_) =>
       token(
         choice(
           seq(
@@ -405,11 +390,11 @@ module.exports = grammar({
         )
       ),
 
-    null: ($) => 'null',
-    true: ($) => 'true',
-    false: ($) => 'false',
+    null: (_) => 'null',
+    true: (_) => 'true',
+    false: (_) => 'false',
 
     // The CEL spec only defines // line comments; block comments are not part of the language.
-    comment: ($) => token(seq('//', /.*/)),
+    comment: (_) => token(seq('//', /.*/)),
   },
 })
