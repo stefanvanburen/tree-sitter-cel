@@ -1,0 +1,28 @@
+# Configuration file for `prek`, a git hook framework written in Rust.
+# See https://prek.j178.dev for more information.
+#:schema https://www.schemastore.org/prek.json
+
+[[repos]]
+repo = "builtin"
+hooks = [
+  { id = "trailing-whitespace", exclude = "^src/" },
+  { id = "end-of-file-fixer", exclude = "^src/" },
+  { id = "check-merge-conflict" },
+  { id = "check-json" },
+  { id = "check-toml" },
+  { id = "check-yaml" },
+]
+
+[[repos]]
+repo = "local"
+hooks = [
+  # src/parser.c embeds the version from tree-sitter.json, so a version bump
+  # needs a regenerate as much as a grammar change does. Fails via prek's
+  # "hook modified files" check if the committed parser is stale, matching
+  # the parser.c diff check in CI.
+  { id = "tree-sitter-generate", name = "tree-sitter generate", entry = "tree-sitter generate", language = "system", pass_filenames = false, files = "^(grammar\\.js|tree-sitter\\.json)$" },
+  { id = "tree-sitter-test", name = "tree-sitter test", entry = "tree-sitter test", language = "system", pass_filenames = false, files = "^(grammar\\.js|src/|test/|queries/)" },
+  # check validates node names against the built parser, so build first.
+  { id = "ts-query-ls-check", name = "ts_query_ls check", entry = "sh -c 'tree-sitter build && ts_query_ls check -f queries/'", language = "system", pass_filenames = false, files = "^(grammar\\.js|src/|queries/)" },
+  { id = "tombi-format", name = "tombi format", entry = "tombi format", language = "system", files = "^prek\\.toml$" },
+]
