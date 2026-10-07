@@ -8,9 +8,9 @@
   (arguments)
 ] @indent.begin
 
-; Dedent before closing delimiters
+; Dedent the line holding a closing delimiter
 [
   "}"
   "]"
   ")"
-] @indent.dedent
+] @indent.branch
