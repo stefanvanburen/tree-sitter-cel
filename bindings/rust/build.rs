@@ -1,5 +1,5 @@
 fn main() {
-    println!("cargo:rustc-check-cfg=cfg(feature, values(\"highlights\", \"injections\"))");
+    println!("cargo:rustc-check-cfg=cfg(feature, values(\"highlights\", \"injections\", \"locals\"))");
 
     let mut c_config = cc::Build::new();
     c_config.std("c11").include("src");
@@ -41,5 +41,8 @@ fn main() {
     }
     if std::path::Path::new("queries/injections.scm").exists() {
         println!("cargo:rustc-cfg=feature=\"injections\"");
+    }
+    if std::path::Path::new("queries/locals.scm").exists() {
+        println!("cargo:rustc-cfg=feature=\"locals\"");
     }
 }

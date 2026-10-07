@@ -32,6 +32,10 @@ pub const HIGHLIGHTS_QUERY: &str = include_str!("../../queries/highlights.scm");
 /// Language injections for the CEL language.
 pub const INJECTIONS_QUERY: &str = include_str!("../../queries/injections.scm");
 
+#[cfg(feature = "locals")]
+/// Local variable queries for the CEL language.
+pub const LOCALS_QUERY: &str = include_str!("../../queries/locals.scm");
+
 #[cfg(test)]
 mod tests {
     #[test]
