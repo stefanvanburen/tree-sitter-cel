@@ -102,3 +102,33 @@
 ] @constant.builtin
 
 (comment) @comment @spell
+
+; Variables bound by macros
+(member_call_expression
+  function: (identifier) @function.method.call
+  arguments: (arguments
+    .
+    (identifier) @variable.parameter)
+  (#any-of? @function.method.call
+    "all" "exists" "exists_one" "existsOne" "map" "filter" "transformList" "transformMap"
+    "transformMapEntry" "sortBy" "optMap" "optFlatMap" "bind"))
+
+(member_call_expression
+  function: (identifier) @function.method.call
+  arguments: (arguments
+    .
+    (identifier) @variable.parameter
+    .
+    (identifier) @variable.parameter
+    .
+    (_) .)
+  (#any-of? @function.method.call "all" "exists" "existsOne"))
+
+(member_call_expression
+  function: (identifier) @function.method.call
+  arguments: (arguments
+    .
+    (identifier) @variable.parameter
+    .
+    (identifier) @variable.parameter)
+  (#any-of? @function.method.call "transformList" "transformMap" "transformMapEntry"))

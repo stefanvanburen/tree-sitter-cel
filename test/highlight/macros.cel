@@ -1,0 +1,23 @@
+xs.all(x, x > 0) && x
+// ^ function.method.call
+//     ^ variable.parameter
+//        ^ variable.parameter
+//                  ^ variable
+
+m.all(k, v, k < v.k)
+//       ^ variable.parameter
+//          ^ variable.parameter
+//              ^ variable.parameter
+//                ^ variable.member
+
+xs.map(x, x > 0, x * 2)
+//               ^ variable.parameter
+
+cel.bind(a, 1, a + [a])
+//       ^ variable.parameter
+//             ^ variable.parameter
+//                  ^ variable.parameter
+
+xs.exists(x, ys.all(y, x == y))
+//                     ^ variable.parameter
+//                          ^ variable.parameter
