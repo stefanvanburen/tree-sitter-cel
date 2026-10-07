@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-cel",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Common Expression Language (CEL) grammar for tree-sitter",
   "main": "bindings/node/index.js",
   "types": "bindings/node/index.d.ts",
