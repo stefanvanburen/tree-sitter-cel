@@ -1,5 +1,8 @@
 ; Syntax highlighting queries for CEL (Common Expression Language).
 ; Maps CEL grammar nodes to standard tree-sitter highlight capture names.
+; Later patterns take precedence, so the general ones come first.
+(identifier) @variable
+
 ; Operators
 [
   "-"
@@ -78,9 +81,6 @@
     (reserved_keyword)
     (escaped_identifier)
   ] @variable.member)
-
-; Variables
-(identifier) @variable
 
 ; Literals
 [
