@@ -1,7 +1,5 @@
 # tree-sitter-cel
 
-[![CI](https://github.com/bufbuild/tree-sitter-cel/actions/workflows/ci.yml/badge.svg)](https://github.com/bufbuild/tree-sitter-cel/actions/workflows/ci.yml)
-
 [Common Expression Language (CEL)](https://cel.dev/) grammar for [tree-sitter](https://github.com/tree-sitter/tree-sitter).
 
 For directions on how to use this grammar, see the [tree-sitter](https://tree-sitter.github.io/tree-sitter/) documentation.
@@ -18,4 +16,4 @@ This repo contains a tree-sitter version of the [CEL grammar](https://github.com
 
 Offered under the [Apache 2 license][license].
 
-[license]: https://github.com/bufbuild/tree-sitter-cel/blob/main/LICENSE
+[license]: LICENSE
