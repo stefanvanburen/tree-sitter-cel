@@ -18,11 +18,12 @@
   "||"
 ] @operator
 
-; Ternary and optional operators
-"?" @operator
-
+; Ternary operator
 (conditional_expression
-  ":" @operator)
+  [
+    "?"
+    ":"
+  ] @keyword.conditional.ternary)
 
 (map_entry
   ":" @punctuation.delimiter)
