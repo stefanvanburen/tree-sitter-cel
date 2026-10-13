@@ -30,6 +30,7 @@
   },
   "bindings": {
     "c": true,
+    "go": true,
     "node": true,
     "rust": true
   }
