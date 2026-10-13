@@ -50,6 +50,7 @@ jobs:
         with:
           test-rust: ${{ runner.os == 'Linux' }}
           test-go: ${{ runner.os == 'Linux' }}
+          go-version: "1.23"
 
   query:
     name: Validate queries
