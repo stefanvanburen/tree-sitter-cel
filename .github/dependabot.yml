@@ -16,6 +16,11 @@ updates:
       timezone: "America/New_York"
     cooldown:
       default-days: 7
+    # go-tree-sitter is pre-1.0, so a minor release can break, and a require
+    # in go.mod is a minimum for every module that imports this one.
+    ignore:
+      - dependency-name: github.com/tree-sitter/go-tree-sitter
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
   - package-ecosystem: cargo
     directory: /
     schedule:
@@ -24,6 +29,8 @@ updates:
       timezone: "America/New_York"
     cooldown:
       default-days: 7
+    # The manifest's ranges are what consumers get; only the lockfile is ours.
+    versioning-strategy: lockfile-only
   - package-ecosystem: npm
     directory: /
     schedule:
@@ -32,3 +39,5 @@ updates:
       timezone: "America/New_York"
     cooldown:
       default-days: 7
+    # The manifest's ranges are what consumers get; only the lockfile is ours.
+    versioning-strategy: lockfile-only
