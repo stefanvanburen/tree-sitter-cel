@@ -10,7 +10,7 @@ concurrency:
 
 jobs:
   release:
-    uses: tree-sitter/workflows/.github/workflows/release.yml@main
+    uses: tree-sitter/workflows/.github/workflows/release.yml@10c66d66e558b37df92e2a8ec5321218a6547b04 # main
     permissions:
       contents: write
       id-token: write
