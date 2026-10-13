@@ -6,27 +6,19 @@ on:
     branches:
       - master
       - main
-    paths:
-      - grammar.js
-      - src/**
-      - test/**
-      - bindings/**
-      - go.mod
-      - go.sum
-      - binding.gyp
-      - queries/**
-      - .github/workflows/ci.yml
+    paths-ignore:
+      - README.md
+      - LICENSE
+      - .editorconfig
+      - .gitattributes
+      - .gitignore
   pull_request:
-    paths:
-      - grammar.js
-      - src/**
-      - test/**
-      - bindings/**
-      - go.mod
-      - go.sum
-      - binding.gyp
-      - queries/**
-      - .github/workflows/ci.yml
+    paths-ignore:
+      - README.md
+      - LICENSE
+      - .editorconfig
+      - .gitattributes
+      - .gitignore
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
